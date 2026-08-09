@@ -1,10 +1,8 @@
-provider: openai
-model: gpt-4o-mini
+provider:
+model:
 
-runs_per_prompt: 3
+prompt_file:
+runs_per_prompt:
 
-input_file: prompts.txt
-output_dir: results
-
-temperature: 0.2
-max_tokens: 800
+temperature:
+max_tokens:
