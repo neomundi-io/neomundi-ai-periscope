@@ -12,9 +12,7 @@ $ErrorActionPreference = "Stop"
 # 4. Run this file.
 #
 # Supported providers are maintained in the official
-# NeoMundi ControlTower documentation:
-#
-# https://github.com/neomundi-io/controltowerai-docs/blob/main/providers.md
+# NeoMundi ControlTower documentation.
 # ============================================================
 
 
@@ -22,10 +20,7 @@ $ErrorActionPreference = "Stop"
 # USER API KEYS
 # ============================================================
 
-# NeoMundi ControlTower API key
 $NEOMUNDI_API_KEY = ""
-
-# API key of the provider selected in config.yaml
 $PROVIDER_API_KEY = ""
 
 
@@ -55,6 +50,11 @@ if (-not (Test-Path "periscope.py")) {
     exit 1
 }
 
+if (-not (Test-Path "snapshot.py")) {
+    Write-Host "ERROR: snapshot.py not found."
+    exit 1
+}
+
 if (-not (Test-Path "requirements.txt")) {
     Write-Host "ERROR: requirements.txt not found."
     exit 1
@@ -74,7 +74,7 @@ if (-not (Get-Command python -ErrorAction SilentlyContinue)) {
 
 
 # ============================================================
-# CHECK NEOMUNDI API KEY
+# CHECK API KEYS
 # ============================================================
 
 if ([string]::IsNullOrWhiteSpace($NEOMUNDI_API_KEY)) {
@@ -83,11 +83,6 @@ if ([string]::IsNullOrWhiteSpace($NEOMUNDI_API_KEY)) {
     Write-Host "Add your NeoMundi ControlTower API key in RUN_PERISCOPE.ps1."
     exit 1
 }
-
-
-# ============================================================
-# CHECK PROVIDER API KEY
-# ============================================================
 
 if ([string]::IsNullOrWhiteSpace($PROVIDER_API_KEY)) {
     Write-Host "ERROR: PROVIDER_API_KEY is empty."
@@ -259,6 +254,55 @@ if ($LASTEXITCODE -ne 0) {
 
 
 # ============================================================
+# FIND LATEST CAMPAIGN RESULTS
+# ============================================================
+
+$latestCampaign = Get-ChildItem "results" -Directory |
+    Where-Object { $_.Name -like "campaign_*" } |
+    Sort-Object LastWriteTime -Descending |
+    Select-Object -First 1
+
+if (-not $latestCampaign) {
+    Write-Host ""
+    Write-Host "WARNING: No campaign results folder found."
+    Write-Host "Campaign completed, but snapshot generation was skipped."
+    exit 0
+}
+
+$resultsJson = Join-Path $latestCampaign.FullName "campaign_results.json"
+
+if (-not (Test-Path $resultsJson)) {
+    Write-Host ""
+    Write-Host "WARNING: campaign_results.json not found."
+    Write-Host "Snapshot generation was skipped."
+    exit 0
+}
+
+
+# ============================================================
+# GENERATE SNAPSHOT
+# ============================================================
+
+Write-Host ""
+Write-Host "Generating campaign snapshot..."
+Write-Host ""
+
+python snapshot.py `
+    --input "$resultsJson" `
+    --config "config.yaml" `
+    --neomundi-logo "assets/LOGO_NeoMundi_Controltower.png" `
+    --output-dir "$($latestCampaign.FullName)"
+
+if ($LASTEXITCODE -ne 0) {
+    Write-Host ""
+    Write-Host "WARNING: Snapshot generation failed."
+    Write-Host "Campaign results remain available in:"
+    Write-Host "  $($latestCampaign.FullName)"
+    exit 0
+}
+
+
+# ============================================================
 # END
 # ============================================================
 
@@ -266,4 +310,13 @@ Write-Host ""
 Write-Host "========================================="
 Write-Host "       Campaign complete"
 Write-Host "========================================="
+Write-Host ""
+Write-Host "Results:"
+Write-Host "  $($latestCampaign.FullName)"
+Write-Host ""
+Write-Host "Generated files may include:"
+Write-Host "  campaign_results.json"
+Write-Host "  campaign_results.csv"
+Write-Host "  AI_PERISCOPE_SNAPSHOT.html"
+Write-Host "  AI_PERISCOPE_SNAPSHOT.pdf"
 Write-Host ""
