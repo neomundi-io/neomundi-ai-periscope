@@ -1,5 +1,7 @@
 # Assets
 
+[🇫🇷 Français](#français) · [🇬🇧 English](#english)
+
 ---
 
 ## Français
@@ -10,8 +12,21 @@ Ce dossier contient les éléments visuels utilisés par **NeoMundi AI Periscope
 
 Le logo NeoMundi utilisé par défaut est :
 
-```text
-LOGO_NeoMundi_Controltower.png
+`LOGO_NeoMundi_Controltower.png`
+
+### Logo de votre organisation — optionnel
+
+Vous pouvez ajouter votre propre logo dans ce dossier afin de générer un snapshot co-brandé.
+
+Nom recommandé :
+
+`organization_logo.png`
+
+Exemple de chemin :
+
+`assets/organization_logo.png`
+
+Le logo de votre organisation est facultatif.
 
 ---
 
@@ -23,5 +38,18 @@ This folder contains the visual assets used by **NeoMundi AI Periscope** to gene
 
 The default NeoMundi logo is:
 
-```text
-LOGO_NeoMundi_Controltower.png
+`LOGO_NeoMundi_Controltower.png`
+
+### Your organization logo — optional
+
+You may add your own logo to this folder to generate a co-branded snapshot.
+
+Recommended filename:
+
+`organization_logo.png`
+
+Example path:
+
+`assets/organization_logo.png`
+
+Your organization logo is optional.
