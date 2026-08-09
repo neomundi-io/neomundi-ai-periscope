@@ -10,7 +10,7 @@
 
 ## NeoMundi AI Periscope v0.1.0
 
-### Lancez votre propre campagne de mesure IA
+### Lancez votre propre campagne de mesure IA et repartez avec un snapshot partageable
 
 **AI Periscope** est un launcher expérimental minimal permettant de lancer vos propres campagnes de prompts vers le modèle IA de votre choix en passant par la couche de mesure **NeoMundi ControlTower**.
 
@@ -22,12 +22,74 @@ Vous choisissez librement :
 - le nombre de répétitions par prompt ;
 - vos paramètres de génération.
 
-AI Periscope exécute ensuite automatiquement votre campagne via NeoMundi ControlTower.
+AI Periscope exécute ensuite votre campagne via NeoMundi ControlTower.
 
-Vous pouvez ainsi tester votre propre dataset, vos propres questions ou votre propre cas d’usage sans avoir à développer vous-même l’intégration avec la couche de mesure NeoMundi.
+À la fin de la campagne, le dispositif peut produire un **Campaign Snapshot HTML et PDF** présentant de manière simple les principaux éléments de l’expérience et les signaux de mesure disponibles.
+
+Le snapshot peut être **co-brandé** avec :
+
+- l’identité NeoMundi ;
+- le nom de votre organisation ;
+- votre logo, de manière optionnelle.
+
+Le parcours est volontairement simple :
+
+```text
+Votre dataset
+      ↓
+Votre provider + votre modèle
+      ↓
+AI Periscope
+      ↓
+NeoMundi ControlTower
+      ↓
+Mesure runtime
+      ↓
+Résultats de campagne
+      ↓
+Snapshot HTML + PDF
+```
 
 > **Vous définissez l’expérience.  
 > AI Periscope fournit le chemin vers la mesure.**
+
+---
+
+## Ce que vous obtenez
+
+Une campagne AI Periscope peut produire un dossier de résultats contenant notamment :
+
+```text
+results/
+└── campaign_...
+    ├── campaign_results.json
+    ├── campaign_results.csv
+    ├── AI_PERISCOPE_SNAPSHOT.html
+    └── AI_PERISCOPE_SNAPSHOT.pdf
+```
+
+Le fichier HTML constitue une sortie légère, lisible et réutilisable.
+
+Le PDF constitue un artefact partageable de la campagne.
+
+Le snapshot peut inclure notamment :
+
+- le provider ;
+- le modèle ;
+- le fichier de prompts utilisé ;
+- le nombre total d’observations ;
+- les principaux signaux de mesure disponibles ;
+- la couverture ;
+- les erreurs éventuelles ;
+- les informations d’exécution ;
+- les limites d’interprétation ;
+- le logo NeoMundi ;
+- votre nom d’organisation ;
+- votre logo, de manière optionnelle.
+
+> **Signal mesuré, pas verdict.**
+
+Le snapshot résume une campagne observée. Il ne constitue ni un verdict factuel, ni une certification de sécurité, ni une conclusion réglementaire.
 
 ---
 
@@ -226,12 +288,7 @@ neomundi-ai-periscope-main.zip
 Sur Windows :
 
 1. ouvrez votre dossier **Téléchargements** ;
-2. trouvez le fichier :
-
-```text
-neomundi-ai-periscope-main.zip
-```
-
+2. trouvez le fichier `neomundi-ai-periscope-main.zip` ;
 3. faites un clic droit dessus ;
 4. choisissez **Extraire tout** ;
 5. choisissez l’emplacement souhaité ;
@@ -265,11 +322,16 @@ Vous devez notamment trouver :
 ```text
 RUN_PERISCOPE.ps1
 periscope.py
+snapshot.py
 config.yaml
 requirements.txt
 README.md
+QUICKSTART.md
+assets/
 input/
 ```
+
+Le dossier `assets/` contient notamment le logo NeoMundi utilisé pour les snapshots.
 
 ---
 
@@ -426,23 +488,8 @@ Par exemple :
 
 ```text
 questions_rgpd.txt
-```
-
-ou :
-
-```text
 questions_ai_act.txt
-```
-
-ou :
-
-```text
 legal_test.txt
-```
-
-ou :
-
-```text
 my_experiment.txt
 ```
 
@@ -507,13 +554,7 @@ prompt_file: input/questions_rgpd.txt
 
 AI Periscope utilisera ce fichier.
 
-Si votre fichier s’appelle :
-
-```text
-my_experiment.txt
-```
-
-vous pouvez écrire :
+Si votre fichier s’appelle `my_experiment.txt`, vous pouvez écrire :
 
 ```yaml
 prompt_file: input/my_experiment.txt
@@ -555,9 +596,7 @@ runs_per_prompt: 100
 
 chaque prompt sera envoyé cent fois.
 
----
-
-## Exemple
+### Exemple
 
 Si votre fichier contient :
 
@@ -645,7 +684,35 @@ Max tokens      → non imposé
 
 ---
 
-# 22. Vérifier Python
+# 22. Ajouter le logo de votre organisation — optionnel
+
+Le snapshot utilise le logo NeoMundi situé dans :
+
+```text
+assets/LOGO_NeoMundi_Controltower.png
+```
+
+Vous pouvez également ajouter votre propre logo dans :
+
+```text
+assets/organization_logo.png
+```
+
+Le logo utilisateur est facultatif.
+
+Lorsqu’il est fourni, le snapshot peut présenter :
+
+```text
+[Votre organisation] + [NeoMundi]
+```
+
+L’identité de votre organisation présente la campagne.
+
+L’identité NeoMundi indique la couche de mesure utilisée.
+
+---
+
+# 23. Vérifier Python
 
 AI Periscope nécessite Python.
 
@@ -665,7 +732,7 @@ Si Windows indique que Python n’est pas installé, installez Python avant de c
 
 ---
 
-# 23. Ouvrir PowerShell dans le dossier AI Periscope
+# 24. Ouvrir PowerShell dans le dossier AI Periscope
 
 Vous devez lancer PowerShell depuis le dossier contenant :
 
@@ -681,7 +748,7 @@ C:\Users\VotreNom\Documents\neomundi-ai-periscope-main
 
 ---
 
-# 24. Lancer AI Periscope
+# 25. Lancer AI Periscope
 
 Dans PowerShell, tapez :
 
@@ -693,7 +760,7 @@ puis appuyez sur **Entrée**.
 
 ---
 
-# 25. Ce que vérifie le launcher
+# 26. Ce que vérifie le launcher
 
 AI Periscope vérifie notamment :
 
@@ -713,7 +780,7 @@ provider:
 
 ---
 
-# 26. Vérifier votre campagne
+# 27. Vérifier votre campagne
 
 Lors du lancement, AI Periscope affiche notamment :
 
@@ -744,7 +811,7 @@ Cela signifie que la campagne effectuera 1 000 requêtes.
 
 ---
 
-# 27. Ce que fait AI Periscope
+# 28. Ce que fait AI Periscope
 
 Le parcours est le suivant :
 
@@ -762,6 +829,8 @@ Modèle choisi
 Réponse IA
         ↓
 Couche de mesure NeoMundi
+        ↓
+Résultats de campagne
 ```
 
 AI Periscope permet donc de conserver :
@@ -780,7 +849,93 @@ tout en ajoutant le chemin vers la mesure NeoMundi.
 
 ---
 
-# 28. Liberté expérimentale
+# 29. Générer le snapshot HTML et PDF
+
+Le fichier :
+
+```text
+snapshot.py
+```
+
+est destiné à transformer les résultats d’une campagne en snapshot partageable.
+
+Le principe est :
+
+```text
+Résultats de campagne
+        ↓
+snapshot.py
+        ↓
+HTML
+        ↓
+PDF
+```
+
+Le HTML est la sortie source du snapshot.
+
+Le PDF est généré à partir de cette représentation lorsque le moteur PDF nécessaire est disponible.
+
+Le snapshot peut intégrer :
+
+- le logo NeoMundi ;
+- le nom de votre organisation ;
+- votre logo ;
+- le provider ;
+- le modèle ;
+- le nombre d’observations ;
+- les signaux disponibles ;
+- les informations de couverture ;
+- les limites d’interprétation.
+
+### Exemple de commande
+
+Lorsque vous disposez d’un fichier de résultats compatible :
+
+```powershell
+python snapshot.py `
+  --input "results/campaign_results.json" `
+  --config "config.yaml" `
+  --neomundi-logo "assets/LOGO_NeoMundi_Controltower.png" `
+  --organization-name "Votre organisation" `
+  --organization-logo "assets/organization_logo.png"
+```
+
+Le logo d’organisation est optionnel.
+
+---
+
+# 30. Sorties du snapshot
+
+Le générateur peut produire :
+
+```text
+AI_PERISCOPE_SNAPSHOT.html
+AI_PERISCOPE_SNAPSHOT.pdf
+```
+
+Si la génération PDF n’est pas disponible sur votre environnement, le HTML reste généré et utilisable.
+
+---
+
+# 31. Frontière d’interprétation
+
+AI Periscope et son snapshot exposent des signaux de mesure.
+
+Ils ne déterminent pas automatiquement :
+
+- la vérité absolue d’une réponse ;
+- la sécurité générale d’un modèle ;
+- la conformité juridique complète ;
+- la pertinence métier finale ;
+- la décision organisationnelle.
+
+Une observation peut nécessiter une analyse complémentaire, une revue humaine ou une couche externe spécialisée.
+
+> **Signal mesuré, pas verdict.**
+
+---
+
+# 32. Liberté expérimentale
 
 AI Periscope ne vous impose pas :
 
@@ -795,11 +950,11 @@ AI Periscope ne vous impose pas :
 
 Vous construisez votre propre campagne.
 
-AI Periscope fournit le launcher.
+AI Periscope fournit le launcher et le chemin vers la mesure.
 
 ---
 
-# 29. Sécurité
+# 33. Sécurité
 
 ## Ne publiez jamais vos clés API
 
@@ -836,19 +991,29 @@ Ne partagez jamais vos clés :
 
 ---
 
-# 30. Structure de AI Periscope
+# 34. Structure de AI Periscope
 
 ```text
 neomundi-ai-periscope/
 │
 ├── RUN_PERISCOPE.ps1
 ├── periscope.py
+├── snapshot.py
 ├── config.yaml
 ├── requirements.txt
 ├── README.md
+├── QUICKSTART.md
 │
-└── input/
-    └── prompts.txt
+├── assets/
+│   ├── README.md
+│   ├── LOGO_NeoMundi_Controltower.png
+│   └── organization_logo.png
+│
+├── input/
+│   └── prompts.txt
+│
+└── results/
+    └── campaign_...
 ```
 
 ### `RUN_PERISCOPE.ps1`
@@ -863,21 +1028,31 @@ Moteur minimal de la campagne.
 
 Il lit la configuration, charge les prompts et transmet les requêtes à NeoMundi ControlTower.
 
+### `snapshot.py`
+
+Générateur léger de snapshot HTML/PDF.
+
 ### `config.yaml`
 
 Configuration libre de la campagne.
+
+### `assets/`
+
+Contient les éléments visuels utilisés par le snapshot.
 
 ### `input/`
 
 Emplacement recommandé pour les datasets et fichiers de prompts.
 
+### `results/`
+
+Emplacement destiné aux résultats et aux snapshots générés.
+
 ---
 
-# 31. Vous ne savez pas télécharger ou lancer le repo ?
+# 35. Vous ne savez pas télécharger ou lancer le repo ?
 
 Copiez le prompt ci-dessous dans votre assistant IA préféré.
-
-Vous pouvez utiliser ChatGPT, Claude, Mistral ou un autre assistant capable de vous guider sur votre ordinateur.
 
 ```text
 Je souhaite installer et utiliser NeoMundi AI Periscope v0.1.0 sur mon ordinateur.
@@ -915,6 +1090,9 @@ Je dois pouvoir :
 - utiliser mon propre fichier texte de prompts ;
 - choisir le nombre de répétitions par prompt ;
 - lancer RUN_PERISCOPE.ps1 ;
+- récupérer les résultats ;
+- ajouter éventuellement le logo de mon organisation ;
+- générer le snapshot HTML et PDF ;
 - comprendre et corriger les éventuels messages d'erreur.
 
 Commence uniquement par la première étape et attends ma réponse.
@@ -926,13 +1104,11 @@ Commence uniquement par la première étape et attends ma réponse.
 
 **NeoMundi AI Periscope v0.1.0**
 
-Status:
-
-**Experimental launcher**
+**Status: Experimental launcher**
 
 Cette première version vise volontairement un objectif simple :
 
-> permettre à un utilisateur de lancer sa propre campagne de prompts à travers la couche de mesure NeoMundi avec un minimum d’intégration.
+> permettre à un utilisateur de lancer sa propre campagne de prompts à travers la couche de mesure NeoMundi avec un minimum d’intégration, puis de transformer les observations en un artefact léger et partageable.
 
 ---
 
@@ -948,7 +1124,7 @@ Real-time measurement of AI behavior at runtime.
 
 ## NeoMundi AI Periscope v0.1.0
 
-### Run your own AI measurement campaign
+### Run your own AI measurement campaign and leave with a shareable snapshot
 
 **AI Periscope** is a minimal experimental launcher designed to run your own prompt campaigns against the AI model of your choice through the **NeoMundi ControlTower** measurement layer.
 
@@ -962,10 +1138,106 @@ You freely choose:
 
 AI Periscope then runs the campaign through NeoMundi ControlTower.
 
-This allows you to test your own dataset, questions or use case without building the NeoMundi measurement integration yourself.
+At the end of the campaign, the workflow can produce an **HTML and PDF Campaign Snapshot** presenting the experiment and selected available measurement signals in a simple format.
+
+The snapshot can be **co-branded** with:
+
+- NeoMundi branding;
+- your organization name;
+- your optional logo.
+
+The flow is deliberately simple:
+
+```text
+Your dataset
+      ↓
+Your provider + your model
+      ↓
+AI Periscope
+      ↓
+NeoMundi ControlTower
+      ↓
+Runtime measurement
+      ↓
+Campaign results
+      ↓
+HTML + PDF Snapshot
+```
 
 > **You define the experiment.  
 > AI Periscope provides the path to measurement.**
+
+---
+
+## What you get
+
+An AI Periscope campaign can produce a results folder containing:
+
+```text
+results/
+└── campaign_...
+    ├── campaign_results.json
+    ├── campaign_results.csv
+    ├── AI_PERISCOPE_SNAPSHOT.html
+    └── AI_PERISCOPE_SNAPSHOT.pdf
+```
+
+The HTML file is a lightweight, readable and reusable output.
+
+The PDF is a shareable campaign artifact.
+
+The snapshot may include:
+
+- provider;
+- model;
+- prompt file;
+- total observations;
+- selected available measurement signals;
+- coverage;
+- execution errors;
+- execution information;
+- interpretation boundaries;
+- NeoMundi branding;
+- your organization name;
+- your optional logo.
+
+> **Measured signal, not a verdict.**
+
+The snapshot summarizes an observed campaign. It is not a factual verdict, a safety certification, or a regulatory conclusion.
+
+---
+
+## What can AI Periscope be used for?
+
+AI Periscope can be used to test:
+
+- legal questions;
+- regulatory questions;
+- business prompts;
+- compliance scenarios;
+- scientific questions;
+- organization-specific questions;
+- existing benchmarks;
+- experimental datasets;
+- response repeatability;
+- behavioral variability;
+- successive campaigns on the same prompt set.
+
+You may send each prompt once or repeat it as many times as needed.
+
+Example:
+
+```text
+10 prompts × 10 repetitions = 100 requests
+```
+
+Another example:
+
+```text
+50 prompts × 20 repetitions = 1,000 requests
+```
+
+You define the campaign.
 
 ---
 
@@ -987,22 +1259,6 @@ This allows AI Periscope to communicate with NeoMundi ControlTower.
 ### Provider key
 
 This allows the selected provider to execute the model you choose.
-
-Example:
-
-```text
-NeoMundi key
-+
-OpenAI key
-```
-
-or:
-
-```text
-NeoMundi key
-+
-Anthropic key
-```
 
 ---
 
@@ -1029,8 +1285,6 @@ Once your account is active:
 3. retrieve your NeoMundi API key;
 4. keep it private.
 
-You will use this key later in AI Periscope.
-
 Never publish your API key.
 
 ---
@@ -1044,16 +1298,6 @@ You can begin with the requests made available with your NeoMundi access, includ
 AI Periscope v0.1.0 uses the **Tier 1** measurement path intended for this experimental launcher.
 
 Always calculate your campaign size before running it.
-
-Example:
-
-```text
-20 prompts
-×
-5 repetitions
-=
-100 requests
-```
 
 ---
 
@@ -1095,12 +1339,6 @@ For non-developers, the simplest method is to download the repository as a ZIP f
 3. click **Download ZIP**;
 4. wait for the download to finish.
 
-You should receive a file similar to:
-
-```text
-neomundi-ai-periscope-main.zip
-```
-
 ---
 
 # 7. Extract the ZIP
@@ -1125,9 +1363,12 @@ Inside the folder you should find:
 ```text
 RUN_PERISCOPE.ps1
 periscope.py
+snapshot.py
 config.yaml
 requirements.txt
 README.md
+QUICKSTART.md
+assets/
 input/
 ```
 
@@ -1148,12 +1389,6 @@ $NEOMUNDI_API_KEY = ""
 ```
 
 Place your NeoMundi key between the quotation marks.
-
-Example:
-
-```powershell
-$NEOMUNDI_API_KEY = "your-neomundi-key"
-```
 
 Never share your real key.
 
@@ -1177,12 +1412,6 @@ $MOONSHOT_API_KEY  = ""
 ```
 
 Fill in only the provider key you intend to use.
-
-Example:
-
-```powershell
-$OPENAI_API_KEY = "your-openai-key"
-```
 
 Leave all other provider fields empty.
 
@@ -1223,18 +1452,6 @@ Example:
 provider: openai
 ```
 
-or:
-
-```yaml
-provider: anthropic
-```
-
-or:
-
-```yaml
-provider: mistral
-```
-
 The selected provider must match the provider key entered in `RUN_PERISCOPE.ps1`.
 
 ---
@@ -1257,20 +1474,6 @@ AI Periscope does not impose a model.
 # 14. Prepare your prompt file
 
 You may use any text file you want.
-
-Examples:
-
-```text
-legal_questions.txt
-```
-
-```text
-ai_act_dataset.txt
-```
-
-```text
-my_experiment.txt
-```
 
 Separate prompts using:
 
@@ -1362,18 +1565,21 @@ Leaving them empty means AI Periscope does not impose those parameters.
 
 ---
 
-# 18. Complete example
+# 18. Add your organization logo — optional
 
-```yaml
-provider: openai
-model: YOUR_MODEL
+The NeoMundi snapshot logo is located at:
 
-prompt_file: input/my_experiment.txt
-runs_per_prompt: 10
-
-temperature:
-max_tokens:
+```text
+assets/LOGO_NeoMundi_Controltower.png
 ```
+
+You may also add your own logo at:
+
+```text
+assets/organization_logo.png
+```
+
+Your organization logo is optional.
 
 ---
 
@@ -1440,37 +1646,85 @@ Selected model
 AI response
        ↓
 NeoMundi measurement layer
+       ↓
+Campaign results
 ```
-
-You retain control over:
-
-```text
-your provider
-+
-your model
-+
-your dataset
-+
-your parameters
-```
-
-AI Periscope provides the path to NeoMundi measurement.
 
 ---
 
-# 23. Security
+# 23. Generate the HTML and PDF snapshot
+
+The file:
+
+```text
+snapshot.py
+```
+
+is designed to transform campaign results into a shareable snapshot.
+
+The flow is:
+
+```text
+Campaign results
+       ↓
+snapshot.py
+       ↓
+HTML
+       ↓
+PDF
+```
+
+Example command:
+
+```powershell
+python snapshot.py `
+  --input "results/campaign_results.json" `
+  --config "config.yaml" `
+  --neomundi-logo "assets/LOGO_NeoMundi_Controltower.png" `
+  --organization-name "Your organization" `
+  --organization-logo "assets/organization_logo.png"
+```
+
+The organization logo is optional.
+
+---
+
+# 24. Snapshot outputs
+
+The generator can produce:
+
+```text
+AI_PERISCOPE_SNAPSHOT.html
+AI_PERISCOPE_SNAPSHOT.pdf
+```
+
+If PDF generation is not available in your environment, the HTML output remains available.
+
+---
+
+# 25. Interpretation boundary
+
+AI Periscope exposes measurement signals.
+
+It does not automatically determine:
+
+- absolute factual truth;
+- general model safety;
+- full legal compliance;
+- final business relevance;
+- organizational decisions.
+
+Additional analysis, human review or specialized external validation may be required.
+
+> **Measured signal, not a verdict.**
+
+---
+
+# 26. Security
 
 Never publish a modified `RUN_PERISCOPE.ps1` containing real keys.
 
-Before sharing the launcher, restore all fields to:
-
-```powershell
-$NEOMUNDI_API_KEY = ""
-
-$OPENAI_API_KEY    = ""
-$ANTHROPIC_API_KEY = ""
-$MISTRAL_API_KEY   = ""
-```
+Before sharing the launcher, restore all key fields to empty values.
 
 Never share API keys in:
 
@@ -1483,7 +1737,34 @@ Never share API keys in:
 
 ---
 
-# 24. Need help installing it?
+# 27. Repository structure
+
+```text
+neomundi-ai-periscope/
+│
+├── RUN_PERISCOPE.ps1
+├── periscope.py
+├── snapshot.py
+├── config.yaml
+├── requirements.txt
+├── README.md
+├── QUICKSTART.md
+│
+├── assets/
+│   ├── README.md
+│   ├── LOGO_NeoMundi_Controltower.png
+│   └── organization_logo.png
+│
+├── input/
+│   └── prompts.txt
+│
+└── results/
+    └── campaign_...
+```
+
+---
+
+# 28. Need help installing it?
 
 Copy the prompt below into your preferred AI assistant:
 
@@ -1523,6 +1804,9 @@ I need to:
 - select my own prompt text file;
 - choose repetitions per prompt;
 - run RUN_PERISCOPE.ps1;
+- retrieve the results;
+- optionally add my organization logo;
+- generate the HTML and PDF snapshot;
 - understand and fix errors if they occur.
 
 Start only with the first step and wait for my reply.
@@ -1538,7 +1822,7 @@ Start only with the first step and wait for my reply.
 
 The purpose of this first version is deliberately simple:
 
-> allow a user to run their own prompt campaign through the NeoMundi measurement layer with minimal integration.
+> allow a user to run their own prompt campaign through the NeoMundi measurement layer with minimal integration and transform the resulting observations into a lightweight shareable artifact.
 
 ---
 
