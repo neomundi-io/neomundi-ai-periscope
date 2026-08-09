@@ -3,7 +3,6 @@ import os
 
 import requests
 import yaml
-from dotenv import load_dotenv
 
 
 CONFIG_FILE = "config.yaml"
@@ -28,6 +27,9 @@ def load_prompts(prompt_file):
         for prompt in content.split("---")
         if prompt.strip()
     ]
+
+    if not prompts:
+        raise ValueError("No prompts found in the selected prompt file.")
 
     return prompts
 
@@ -65,37 +67,62 @@ def call_controltower(prompt, config, controltower_key, provider_key):
 
 
 def main():
-    load_dotenv()
-
     config = load_config()
 
     controltower_key = os.getenv("CONTROLTOWER_API_KEY")
     provider_key = os.getenv("PROVIDER_API_KEY")
 
     if not controltower_key:
-        raise ValueError("Missing CONTROLTOWER_API_KEY in .env")
+        raise ValueError(
+            "Missing CONTROLTOWER_API_KEY. "
+            "Launch AI Periscope with RUN_PERISCOPE.ps1."
+        )
 
     if not provider_key:
-        raise ValueError("Missing PROVIDER_API_KEY in .env")
+        raise ValueError(
+            "Missing PROVIDER_API_KEY. "
+            "Add the provider key in RUN_PERISCOPE.ps1."
+        )
+
+    required_fields = [
+        "provider",
+        "model",
+        "prompt_file",
+        "runs_per_prompt",
+    ]
+
+    for field in required_fields:
+        if config.get(field) in (None, ""):
+            raise ValueError(
+                f"Missing required field in config.yaml: {field}"
+            )
 
     prompts = load_prompts(config["prompt_file"])
+
     runs_per_prompt = int(config["runs_per_prompt"])
+
+    if runs_per_prompt < 1:
+        raise ValueError("runs_per_prompt must be at least 1.")
 
     total_requests = len(prompts) * runs_per_prompt
 
+    print("")
     print("NeoMundi AI Periscope")
     print("---------------------")
-    print(f"Provider: {config['provider']}")
-    print(f"Model: {config['model']}")
-    print(f"Prompts: {len(prompts)}")
-    print(f"Runs per prompt: {runs_per_prompt}")
-    print(f"Total requests: {total_requests}")
-    print()
+    print(f"Provider        : {config['provider']}")
+    print(f"Model           : {config['model']}")
+    print(f"Prompt file     : {config['prompt_file']}")
+    print(f"Prompts         : {len(prompts)}")
+    print(f"Runs per prompt : {runs_per_prompt}")
+    print(f"Total requests  : {total_requests}")
+    print("")
 
     current = 0
 
     for prompt_index, prompt in enumerate(prompts, start=1):
+
         for run_index in range(1, runs_per_prompt + 1):
+
             current += 1
 
             print(
@@ -104,13 +131,13 @@ def main():
             )
 
             call_controltower(
-                prompt,
-                config,
-                controltower_key,
-                provider_key,
+                prompt=prompt,
+                config=config,
+                controltower_key=controltower_key,
+                provider_key=provider_key,
             )
 
-    print()
+    print("")
     print("Campaign complete.")
 
 
