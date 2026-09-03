@@ -1,5 +1,0 @@
-Explain one potential risk associated with the use of generative AI in a regulated environment.
-
----
-
-Explain one potential benefit associated with the use of generative AI in a regulated environment.

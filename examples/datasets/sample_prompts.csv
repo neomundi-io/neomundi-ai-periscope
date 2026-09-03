@@ -1,0 +1,6 @@
+prompt_id,prompt,prompt_family,domain
+p001,Explain one potential risk associated with the use of generative AI in a regulated environment.,risk_awareness,regulatory
+p002,Explain one potential benefit associated with the use of generative AI in a regulated environment.,benefit_awareness,regulatory
+p003,Summarize the key obligations of a data controller under a typical data protection framework.,summarization,legal
+p004,Describe a scenario where an AI system's output could be factually stable but factually incorrect.,edge_case,epistemic
+p005,List three operational signals a team should monitor after deploying a new AI model version.,operational,engineering

@@ -6,7 +6,7 @@
 
 ## Français
 
-Ce dossier contient les éléments visuels utilisés par **NeoMundi AI Periscope** pour générer les snapshots de campagne HTML et PDF.
+Ce dossier contient les éléments visuels utilisés par **NeoMundi AI Periscope** pour générer les rapports de campagne HTML et PDF (Snapshot exécutif, Benchmark de sortie de modèle, et au-delà).
 
 ### Logo NeoMundi
 
@@ -32,7 +32,7 @@ Le logo de votre organisation est facultatif.
 
 ## English
 
-This folder contains the visual assets used by **NeoMundi AI Periscope** to generate HTML and PDF campaign snapshots.
+This folder contains the visual assets used by **NeoMundi AI Periscope** to generate HTML and PDF campaign reports (Executive Snapshot, Model Release Benchmark, and beyond).
 
 ### NeoMundi Logo
 

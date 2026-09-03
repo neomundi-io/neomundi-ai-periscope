@@ -1,0 +1,5 @@
+-r requirements.txt
+pytest>=7.0
+# Optional PDF engines (either is enough; the report generators fall back
+# gracefully to HTML-only if neither is installed):
+playwright>=1.40

@@ -1,0 +1,35 @@
+# Example campaign: a new model release checked against a current baseline
+# model, on the same small corpus, with 3 repetitions per prompt.
+#
+# Try it without any API key:
+#   periscope run examples/campaigns/sample_campaign.yaml --simulate
+#
+# Try it against real NeoMundi + provider APIs:
+#   export NEOMUNDI_API_KEY=...
+#   export PERISCOPE_OPENAI_API_KEY=...
+#   export PERISCOPE_ANTHROPIC_API_KEY=...
+#   periscope run examples/campaigns/sample_campaign.yaml
+
+campaign_id: sample_release_check
+
+dataset: examples/datasets/sample_prompts.csv
+
+providers_models:
+  - provider: openai
+    model: gpt-4o-2024-11-20
+  - provider: anthropic
+    model: claude-sonnet-5
+
+repetitions: 3
+
+# Arm compared against when generating a Model Release Benchmark report,
+# unless --reference-arm overrides it on the CLI.
+baseline_arm_id: "openai:gpt-4o-2024-11-20"
+
+measurement:
+  mode: OBS
+  schema_version_preference: "0.2.0"
+
+output_dir: examples/outputs
+
+notes: "Example campaign shipped with the product; safe to run with --simulate."

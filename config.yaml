@@ -1,8 +1,0 @@
-provider:
-model:
-
-prompt_file:
-runs_per_prompt:
-
-temperature:
-max_tokens:

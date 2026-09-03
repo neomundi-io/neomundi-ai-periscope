@@ -1,11 +1,19 @@
+# Python
 __pycache__/
-*.py[cod]
-*.pyo
-*.pyd
-
-.env
+*.pyc
+*.egg-info/
+.pytest_cache/
+build/
+dist/
 .venv/
 venv/
 
-results/
+# Campaign outputs and secrets -- never commit real campaign data or keys
+examples/outputs/*
+!examples/outputs/.gitkeep
+.env
+*.env
+
+# OS
 .DS_Store
+Thumbs.db
