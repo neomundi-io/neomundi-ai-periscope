@@ -37,7 +37,7 @@ consommatrice conserve l’autorité d’interprétation, de politique et de dé
    ```
 
 2. **Créez votre compte et votre clé API NeoMundi pour les mesures réelles**  
-   [Ouvrir la plateforme NeoMundi →](https://controlotower.neomundi.io/welcome)
+   [Ouvrir la plateforme NeoMundi →](https://controltower.neomundi.io/welcome)
 
 3. **Configurez une campagne réelle et connectez votre fournisseur**  
    [Suivre le Quickstart complet →](./QUICKSTART.md)
