@@ -35,7 +35,7 @@ interpretation, policy and decision authority.
    ```
 
 2. **Create your NeoMundi account and API key for live measurements**  
-   [Open the NeoMundi platform →](https://controlotower.neomundi.io/welcome)
+   [Open the NeoMundi platform →](https://controltower.neomundi.io/welcome)
 
 3. **Configure a live campaign and connect your provider**  
    [Follow the full Quickstart →](./QUICKSTART.md)
