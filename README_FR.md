@@ -1,117 +1,158 @@
-# NeoMundi AI Periscope Layer
+# NeoMundi AI Periscope
 
 [🇬🇧 English version](./README.md)
 
-**Sondez, benchmarkez, établissez une baseline et évaluez des systèmes IA à travers modèles, providers et datasets.**
+## Évaluez les systèmes d’IA avant et après chaque changement — et conservez des preuves reproductibles
 
-Exécutez des campagnes d'évaluation IA reproductibles à partir des mesures runtime NeoMundi, puis transformez ces observations en datasets comparables, analyses et rapports décisionnels.
+AI Periscope exécute des campagnes d’évaluation documentées sur différents
+modèles, fournisseurs, prompts et jeux de données à partir des mesures runtime
+NeoMundi.
 
-**Un moteur de campagne · Plusieurs providers · Mesures reproductibles · Résultats comparables · Preuves prêtes pour la décision**
+Il transforme les observations obtenues en jeux de données canoniques, analyses
+comparables et rapports prêts à éclairer la décision. Ces éléments peuvent
+soutenir :
+
+- **l’évaluation de nouveaux modèles et fournisseurs** ;
+- **les baselines de préproduction et les comparaisons après mise à niveau** ;
+- **les décisions de migration de modèle et de configuration** ;
+- **l’audit, la traçabilité et les éléments de preuve de conformité** ;
+- **le suivi longitudinal et la comparaison comportementale** ;
+- **le FinOps et la revue opérationnelle**.
+
+AI Periscope fournit des éléments de preuve reproductibles. L’organisation
+consommatrice conserve l’autorité d’interprétation, de politique et de décision.
+
+**Un moteur de campagne · Plusieurs fournisseurs · Mesures reproductibles · Résultats comparables**
+
+> **Sondez. Comparez. Documentez. Décidez avec le contexte nécessaire.**
+
+### Lancez votre première campagne
+
+1. **Testez AI Periscope localement — aucune clé API requise**
+
+   ```bash
+   python -m pip install -e .
+   periscope run examples/campaigns/sample_campaign.yaml --simulate
+   periscope report sample_release_check --type snapshot --lang both
+   ```
+
+2. **Créez votre compte et votre clé API NeoMundi pour les mesures réelles**  
+   [Ouvrir la plateforme NeoMundi →](https://controlotower.neomundi.io/welcome)
+
+3. **Configurez une campagne réelle et connectez votre fournisseur**  
+   [Suivre le Quickstart complet →](./QUICKSTART.md)
+
+4. **Générez un rapport reproductible**  
+   Commencez par un Executive Snapshot ou un Model Release Benchmark.
 
 ```text
 NeoMundi Runtime Measurement Layer
         |
         v
-NeoMundi AI Periscope Layer
+NeoMundi AI Periscope
         |
         v
 Campagne / Benchmark / Baseline / Évaluation
         |
         v
-Datasets canoniques  ->  Analyse  ->  Bibliothèque de rapports
+Jeux de données canoniques  ->  Analyse  ->  Bibliothèque de rapports
 ```
 
-AI Periscope consomme les mesures NeoMundi — il ne les redéfinit pas. Voir
+AI Periscope consomme les mesures NeoMundi — il ne les redéfinit pas. Consultez
 [`docs/METRIC_BOUNDARIES.md`](./docs/METRIC_BOUNDARIES.md).
 
 ---
 
-## Benchmarker un nouveau modèle IA dès sa sortie
+## Évaluez un nouveau modèle d’IA dès sa sortie
 
-Rejouez le même corpus contre un modèle nouvellement publié et votre baseline actuelle.
+Exécutez le même corpus sur un modèle nouvellement publié et sur votre baseline
+actuelle.
 
-AI Periscope capture les mesures runtime NeoMundi, construit un dataset de campagne comparable et produit un rapport de benchmark reproductible.
+AI Periscope recueille les mesures runtime NeoMundi, construit un jeu de données
+de campagne comparable et produit un rapport de benchmark reproductible.
 
 ```bash
-periscope run ma_campagne.yaml
-periscope report id_campagne --type model-release-benchmark --lang fr
+periscope run my_campaign.yaml
+periscope report my_campaign_id --type model-release-benchmark --lang fr
 ```
 
-Cas d'usage :
+Cas d’usage :
 
-- évaluation de sortie de modèle
-- comparaison de providers
-- évaluation de migration
-- changement de version de modèle
-- baseline pré-production
-- comparaison post-upgrade
+- évaluation d’une nouvelle version de modèle ;
+- comparaison de fournisseurs ;
+- évaluation d’une migration ;
+- changement de version de modèle ;
+- baseline de préproduction ;
+- comparaison après mise à niveau.
 
-Ce n'est **pas un classement universel**. Le rapport présente des deltas
-mesurés sous un corpus, un protocole et une version de mesure documentés —
-jamais « Le modèle X est le meilleur modèle ». Voir
+Il ne s’agit **pas d’un classement universel**. Le rapport présente les écarts
+mesurés pour un corpus, un protocole et une version de mesure documentés —
+jamais « le modèle X est le meilleur modèle ». Consultez
 [`docs/BENCHMARK.md`](./docs/BENCHMARK.md).
 
 ---
 
-## Deux rapports ouverts, disponibles dès aujourd'hui
+## Deux rapports ouverts, disponibles aujourd’hui
 
-| Rapport | Répond à | Commande |
+| Rapport | Question traitée | Commande |
 |---|---|---|
-| **Snapshot exécutif** | Ce qui a été testé, ce qui a changé, ce qui mérite attention | `periscope report <id> --type snapshot` |
-| **Benchmark de sortie de modèle** | Comment un nouveau modèle se compare sur ce corpus | `periscope report <id> --type model-release-benchmark` |
+| **Executive Snapshot** | Qu’est-ce qui a été testé, qu’est-ce qui a changé et quels éléments méritent une attention particulière ? | `periscope report <id> --type snapshot` |
+| **Model Release Benchmark** | Comment un modèle nouveau ou différent se compare-t-il sur ce corpus ? | `periscope report <id> --type model-release-benchmark` |
 
-Les deux : HTML + PDF, FR + EN, construits à partir d'un dataset canonique
-pour que les résultats soient reproductibles par un tiers. Voir
+Les deux rapports sont disponibles en HTML + PDF et en français + anglais. Ils
+sont construits à partir d’un jeu de données canonique afin qu’un tiers puisse
+reproduire les résultats. Consultez
 [`docs/REPORTING.md`](./docs/REPORTING.md).
 
-### Reporting avancé — sur demande
+### Rapports avancés — disponibles sur demande
 
-Métrologie complète · Gouvernance / Revue · FinOps · Longitudinal · Preuve
-de conformité · Rapport sur mesure.
+Métrologie complète · Gouvernance / Revue · FinOps · Longitudinal · Éléments de
+preuve de conformité · Personnalisé.
 
-Les fonctions d'analyse sous-jacentes sont déjà publiques dans
-[`periscope/analysis/`](./periscope/analysis/) — seul le rendu packagé de
-ces rapports n'est pas livré dans cette version. Voir
-[`docs/REPORT_LIBRARY.md`](./docs/REPORT_LIBRARY.md) pour le détail de
-chacun.
+Les fonctions d’analyse sous-jacentes sont déjà publiques dans
+[`periscope/analysis/`](./periscope/analysis/) — seul le rendu packagé de ces
+types de rapports n’est pas distribué dans cette version. Consultez
+[`docs/REPORT_LIBRARY.md`](./docs/REPORT_LIBRARY.md) pour connaître le contenu
+de chaque rapport.
 
-**Contactez NeoMundi via [neomundi.io](https://neomundi.io).**
+**Contactez NeoMundi sur [neomundi.io](https://neomundi.io).**
 
 ---
 
-## Démarrage rapide
+## Quickstart
 
 ```bash
 python -m pip install -e .
 
-# Sans clé API :
+# Aucune clé API requise :
 periscope run examples/campaigns/sample_campaign.yaml --simulate
 periscope report sample_release_check --type snapshot --lang both
 ```
 
-Parcours complet, y compris l'exécution contre les API NeoMundi et
-providers réelles : [`QUICKSTART.md`](./QUICKSTART.md).
+Parcours complet, incluant une exécution avec les API NeoMundi et fournisseur :
+[`QUICKSTART.md`](./QUICKSTART.md).
 
 ## Ce qui a été testé doit rester reproductible
 
 Chaque campagne produit :
 
-- un **dataset canonique** (`campaign_results.json` / `.csv`) — une ligne
-  par observation, avec les champs de mesure NeoMundi (`nm_*`) et les
-  champs opérationnels de campagne (`op_*`) strictement séparés de toute
-  analyse dérivée Periscope ;
-- un **manifeste de campagne** (`campaign_manifest.json`) — hash du
-  dataset, arms, répétitions, versions de schéma/moteur de mesure
-  observées, nombre d'erreurs, et hashes des fichiers de sortie.
+- un **jeu de données canonique** (`campaign_results.json` / `.csv`) — une ligne
+  par observation, avec une séparation stricte entre les champs de mesure
+  NeoMundi (`nm_*`), les champs opérationnels de campagne (`op_*`) et toute
+  analyse dérivée par Periscope ;
+- un **manifeste de campagne** (`campaign_manifest.json`) — empreinte du jeu de
+  données, branches expérimentales, répétitions, versions observées du schéma et
+  du moteur de mesure, nombre d’erreurs et empreintes des fichiers produits.
 
-Rien n'est masqué : les erreurs d'exécution sont comptées et traçables,
-jamais silencieusement écartées. Voir
+Rien n’est masqué : les erreurs d’exécution sont comptabilisées et traçables,
+jamais supprimées silencieusement. Consultez
 [`docs/CAMPAIGN_MODEL.md`](./docs/CAMPAIGN_MODEL.md).
 
-## Providers
+## Fournisseurs
 
-Seuls les providers documentés par NeoMundi sont supportés — rien de
-hardcodé au-delà de cette liste (`periscope/providers/registry.py`) :
+Seuls les fournisseurs documentés par NeoMundi sont pris en charge — aucun
+autre n’est codé en dur au-delà de cette liste
+(`periscope/providers/registry.py`) :
 
 ```text
 openai · anthropic · google (alias gemini) · mistral · cohere · deepseek
@@ -126,35 +167,35 @@ periscope report <campaign_id> --type snapshot [--lang fr|en|both]
 periscope report <campaign_id> --type model-release-benchmark [--reference-arm ARM]
 ```
 
-## Plan de la documentation
+## Carte de la documentation
 
-| Document | Objet |
+| Document | Fonction |
 |---|---|
-| [`QUICKSTART.md`](./QUICKSTART.md) | Une première campagne et un premier rapport en quelques minutes |
-| [`docs/PRODUCT_ARCHITECTURE.md`](./docs/PRODUCT_ARCHITECTURE.md) | Comment le moteur, la bibliothèque d'analyse et la bibliothèque de rapports s'articulent |
-| [`docs/CAMPAIGN_MODEL.md`](./docs/CAMPAIGN_MODEL.md) | Le schéma `campaign.yaml`, le plan d'exécution, les providers |
-| [`docs/BENCHMARK.md`](./docs/BENCHMARK.md) · [`BASELINE.md`](./docs/BASELINE.md) · [`AUDIT.md`](./docs/AUDIT.md) · [`EVALUATION.md`](./docs/EVALUATION.md) | La bibliothèque d'analyse |
+| [`QUICKSTART.md`](./QUICKSTART.md) | Obtenir une première campagne et un premier rapport en quelques minutes |
+| [`docs/PRODUCT_ARCHITECTURE.md`](./docs/PRODUCT_ARCHITECTURE.md) | Articulation entre le moteur, la bibliothèque d’analyse et la bibliothèque de rapports |
+| [`docs/CAMPAIGN_MODEL.md`](./docs/CAMPAIGN_MODEL.md) | Schéma `campaign.yaml`, plan d’exécution et fournisseurs |
+| [`docs/BENCHMARK.md`](./docs/BENCHMARK.md) · [`BASELINE.md`](./docs/BASELINE.md) · [`AUDIT.md`](./docs/AUDIT.md) · [`EVALUATION.md`](./docs/EVALUATION.md) | Bibliothèque d’analyse |
 | [`docs/REPORTING.md`](./docs/REPORTING.md) | Les deux rapports ouverts |
 | [`docs/REPORT_LIBRARY.md`](./docs/REPORT_LIBRARY.md) | Catalogue complet des rapports, ouverts et sur demande |
-| [`docs/METRIC_BOUNDARIES.md`](./docs/METRIC_BOUNDARIES.md) | Mesure NeoMundi vs. analyse Periscope — la règle que tout le reste suit |
-| [`VERSIONING.md`](./VERSIONING.md) | Version du package vs. versions de mesure NeoMundi |
-| [`reference/NOTES.md`](./reference/NOTES.md) | Pointeurs vers les sources normatives NeoMundi avec lesquelles ce produit s'aligne |
+| [`docs/METRIC_BOUNDARIES.md`](./docs/METRIC_BOUNDARIES.md) | Mesure NeoMundi ou analyse Periscope — la règle qui structure tout le produit |
+| [`VERSIONING.md`](./VERSIONING.md) | Version du package ou versions des mesures NeoMundi |
+| [`reference/NOTES.md`](./reference/NOTES.md) | Pointeurs vers les sources normatives NeoMundi avec lesquelles le produit est aligné |
 
 ## Ce que ce produit ne prétend pas faire
 
-AI Periscope ne certifie pas, ne déclare pas un système sûr ou dangereux,
-conforme ou non conforme, et ne produit pas de classement universel des
-modèles. Il mesure, via NeoMundi, et transforme ces mesures en preuves
-comparables et reproductibles — l'interprétation, la politique et la
-décision restent celles de l'organisation consommatrice. Voir
+AI Periscope ne certifie pas, ne déclare pas qu’un système est sûr ou dangereux,
+conforme ou non conforme, et ne produit pas de classement universel des modèles.
+Il mesure par l’intermédiaire de NeoMundi et transforme ces mesures en éléments
+de preuve comparables et reproductibles — l’interprétation, la politique et la
+décision restent du ressort de l’organisation consommatrice. Consultez
 [`docs/METRIC_BOUNDARIES.md`](./docs/METRIC_BOUNDARIES.md).
 
 ## Référence méthodologique privée
 
-La bibliothèque d'analyse et les rapports ouverts ont été généralisés à
-partir du générateur de reporting privé Euria/Fatima de NeoMundi, utilisé
-ici uniquement comme référence méthodologique. Ce générateur, sa logique de
-reporting spécifique client, et tout dataset identifiant un client ne font
+La bibliothèque d’analyse et les rapports ouverts ont été généralisés à partir
+du générateur privé de rapports Euria/Fatima de NeoMundi, utilisé ici uniquement
+comme référence méthodologique. Ce générateur, sa logique de rapport propre aux
+clients et tout jeu de données permettant d’identifier un client ne font
 **pas** partie de ce dépôt.
 
 ## Licence
